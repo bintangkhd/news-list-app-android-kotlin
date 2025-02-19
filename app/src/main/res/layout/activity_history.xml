@@ -7,4 +7,28 @@
     android:layout_height="match_parent"
     tools:context=".HistoryActivity">
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_history_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:shimmer_auto_start="true"
+        app:shimmer_duration="1000">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_history_news"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/item_history_news"/>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/layout_no_history" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
