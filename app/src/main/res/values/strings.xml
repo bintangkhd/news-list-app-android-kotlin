@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">NewsList</string>
+    <string name="history">History</string>
+    <string name="search">Search</string>
+    <string name="desc_news_picture">News Picture</string>
+    <string name="news_name">Name</string>
+    <string name="news_author">Author</string>
+    <string name="news_date">Mon, 01 Jan 1970 00.00</string>
+    <string name="news_title">Title</string>
+    <string name="news_description">Description</string>
+    <string name="news_see_more">see more</string>
+    <string name="desc_see_more">see more</string>
 </resources>

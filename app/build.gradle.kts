@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.bintangkhd.newslist"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.bintangkhd.newslist"
@@ -32,6 +32,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    buildFeatures {
+        viewBinding = true;
     }
 }
 

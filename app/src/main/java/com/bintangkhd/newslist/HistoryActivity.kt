@@ -5,16 +5,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.bintangkhd.newslist.databinding.ActivityMainBinding
+import com.bintangkhd.newslist.databinding.ActivityHistoryBinding
 
-class MainActivity : AppCompatActivity() {
+class HistoryActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityMainBinding;
+    private lateinit var binding : ActivityHistoryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
