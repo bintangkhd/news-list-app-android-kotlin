@@ -15,7 +15,7 @@ class NewsPagingSource @Inject constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, NewsItem> {
         return try {
             val page = params.key ?: 1
-            Log.d("NewsPagingSource", "Memuat data untuk halaman: $page") // 🔥 Tambahkan ini
+            Log.d("NewsPagingSource", "Memuat data untuk halaman: $page")
 
             val response = apiService.getNews(
                 query = query,
@@ -24,7 +24,7 @@ class NewsPagingSource @Inject constructor(
                 apiKey = BuildConfig.API_KEY
             )
 
-            Log.d("NewsPagingSource", "Total artikel diterima: ${response.articles.size}") // 🔥 Tambahkan ini
+            Log.d("NewsPagingSource", "Total artikel diterima: ${response.articles.size}")
 
             LoadResult.Page(
                 data = response.articles,
@@ -32,7 +32,7 @@ class NewsPagingSource @Inject constructor(
                 nextKey = if (response.articles.isEmpty()) null else page + 1
             )
         } catch (e: Exception) {
-            Log.e("NewsPagingSource", "Error: ${e.message}") // 🔥 Tambahkan ini
+            Log.e("NewsPagingSource", "Error: ${e.message}")
             LoadResult.Error(e)
         }
     }

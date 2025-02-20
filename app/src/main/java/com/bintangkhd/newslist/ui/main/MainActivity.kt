@@ -70,12 +70,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         homeNewsAdapter.addLoadStateListener { loadState ->
-            Log.d("MainActivity", "📡 LoadState: $loadState")
+            Log.d("MainActivity", "LoadState: $loadState")
 
             if (loadState.refresh is LoadState.Loading) {
-                Log.d("MainActivity", "⌛ Berita sedang dimuat...")
+                Log.d("MainActivity", "Berita sedang dimuat...")
             } else {
-                Log.d("MainActivity", "✅ Berita berhasil dimuat!")
+                Log.d("MainActivity", "Berita berhasil dimuat!")
             }
 
             binding.layoutNoData.root.visibility =
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
 
             val errorState = loadState.refresh as? LoadState.Error
             errorState?.let {
-                Log.e("MainActivity", "❌ Gagal memuat berita: ${it.error.message}")
+                Log.e("MainActivity", "Gagal memuat berita: ${it.error.message}")
             }
         }
     }
@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.history -> {
-                Log.d("MainActivity", "📜 Fitur History belum dikonfigurasi")
+                Log.d("MainActivity", "Fitur History belum dikonfigurasi")
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun performSearch(query: String) {
-        Log.d("MainActivity", "🔄 Mencari berita dengan query: $query")
+        Log.d("MainActivity", "Mencari berita dengan query: $query")
         mainViewModel.setSearchQuery(query)
     }
 }

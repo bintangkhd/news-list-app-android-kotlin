@@ -22,15 +22,19 @@ class MainViewModel @Inject constructor(
     private val newsRepository: NewsRepository
 ) : ViewModel() {
 
-    private val currentQuery = MutableStateFlow("politics")
+    private val currentQuery = MutableStateFlow(DEFAULT_QUERY)
 
-    val news = currentQuery
+    val news: Flow<PagingData<NewsItem>> = currentQuery
         .flatMapLatest { query ->
             newsRepository.getNews(query)
         }
         .cachedIn(viewModelScope)
 
-    fun searchNews(query: String) {
+    fun setSearchQuery(query: String) {
         currentQuery.value = query
+    }
+
+    companion object {
+        private const val DEFAULT_QUERY = "president"
     }
 }
