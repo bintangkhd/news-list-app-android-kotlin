@@ -10,5 +10,6 @@
     <string name="news_description">Description</string>
     <string name="news_see_more">see more</string>
     <string name="desc_see_more">see more</string>
-    <string name="no_history_found">NO HISTORY FOUND</string>
+    <string name="no_data_found">NO DATA FOUND</string>
+    <string name="search_hint">Find news</string>
 </resources>

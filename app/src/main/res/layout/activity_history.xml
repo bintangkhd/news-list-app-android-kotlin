@@ -27,8 +27,14 @@
     </com.facebook.shimmer.ShimmerFrameLayout>
 
     <include
+        android:id="@+id/layout_no_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        layout="@layout/layout_no_history" />
+        layout="@layout/layout_no_data"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,16 +27,5 @@ class NewsRepository @Inject constructor(
             pagingSourceFactory = { NewsPagingSource(apiService, query) }
         ).flow
     }
-
-//    fun getNewsWithoutPagination(query: String): Flow<Resource<List<NewsItem>>> = flow {
-//        emit(Resource.Loading())
-//        try {
-//            val response = apiService.getNews(query, 1, 20, apiKey = BuildConfig.API_KEY)
-//            emit(Resource.Success(response.articles))
-//        } catch (e: Exception) {
-//            emit(Resource.Error("Terjadi kesalahan: ${e.message}"))
-//        }
-//    }.catch { e ->
-//        emit(Resource.Error("Terjadi kesalahan: ${e.message}"))
-//    }
 }
+
