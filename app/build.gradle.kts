@@ -66,6 +66,18 @@ dependencies {
     implementation (libs.kotlinx.coroutines.android)
     implementation (libs.kotlinx.coroutines.core)
 
+    // Mockito
+    testImplementation (libs.mockito.core)
+    testImplementation (libs.mockito.kotlin)
+
+    // Coroutines Test
+    //noinspection UseTomlInstead
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+
+    // Paging Testing
+    //noinspection GradleDependency
+    testImplementation (libs.androidx.paging.common.ktx)
+
     // Skeleton Loading (Shimmer Effect)
     implementation (libs.shimmer)
 

@@ -7,22 +7,20 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.SearchView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bintangkhd.newslist.R
+import com.bintangkhd.newslist.data.service.local.NewsHistory
 import com.bintangkhd.newslist.databinding.ActivityMainBinding
 import com.bintangkhd.newslist.ui.adapter.HomeNewsAdapter
-import com.bintangkhd.newslist.utils.SpacingItemDecoration
+import com.bintangkhd.newslist.ui.history.HistoryActivity
+import com.bintangkhd.newslist.ui.history.HistoryViewModel
+import com.bintangkhd.newslist.utils.Utilities
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -31,22 +29,25 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val mainViewModel: MainViewModel by viewModels()
     private lateinit var homeNewsAdapter: HomeNewsAdapter
+    private val mainViewModel: MainViewModel by viewModels()
+    private val historyViewModel: HistoryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
+        setSupportActionBar(binding.toolbarHome)
         setupRecyclerView()
         observeNews()
     }
 
     private fun setupRecyclerView() {
-        homeNewsAdapter = HomeNewsAdapter { news ->
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(news.url))
+        homeNewsAdapter = HomeNewsAdapter { newsHistory ->
+            saveToHistory(newsHistory)
+
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(newsHistory.url))
             startActivity(intent)
         }
 
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.rvHomeNews.layoutManager = layoutManager
         binding.rvHomeNews.adapter = homeNewsAdapter
-        binding.rvHomeNews.addItemDecoration(SpacingItemDecoration(8))
+        binding.rvHomeNews.addItemDecoration(Utilities.createSpacingItemDecoration(8))
     }
 
     private fun observeNews() {
@@ -72,18 +73,17 @@ class MainActivity : AppCompatActivity() {
         homeNewsAdapter.addLoadStateListener { loadState ->
             Log.d("MainActivity", "LoadState: $loadState")
 
-            if (loadState.refresh is LoadState.Loading) {
-                Log.d("MainActivity", "Berita sedang dimuat...")
-            } else {
-                Log.d("MainActivity", "Berita berhasil dimuat!")
-            }
-
             binding.layoutNoData.root.visibility =
                 if (homeNewsAdapter.itemCount == 0) View.VISIBLE else View.GONE
 
             val errorState = loadState.refresh as? LoadState.Error
             errorState?.let {
                 Log.e("MainActivity", "Gagal memuat berita: ${it.error.message}")
+                Toast.makeText(
+                    this@MainActivity,
+                    "Failed to connect, please make sure you are connected",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -98,14 +98,14 @@ class MainActivity : AppCompatActivity() {
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()) {
-                    performSearch(query)
+                    mainViewModel.setSearchQuery(query)
                 }
                 searchView.clearFocus()
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return false
+                return true
             }
         })
 
@@ -115,15 +115,16 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.history -> {
-                Log.d("MainActivity", "Fitur History belum dikonfigurasi")
+                startActivity(Intent(this, HistoryActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun performSearch(query: String) {
-        Log.d("MainActivity", "Mencari berita dengan query: $query")
-        mainViewModel.setSearchQuery(query)
+    private fun saveToHistory(newsHistory: NewsHistory) {
+        lifecycleScope.launch {
+            historyViewModel.insertNewsHistory(newsHistory)
+        }
     }
 }

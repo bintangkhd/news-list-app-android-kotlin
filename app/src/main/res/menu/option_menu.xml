@@ -7,12 +7,12 @@
         android:icon="@drawable/ic_menu_search"
         android:title="@string/search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="collapseActionView|always" />
+        app:showAsAction="always|collapseActionView" />
 
     <item
         android:id="@+id/history"
         android:icon="@drawable/ic_menu_history"
         android:title="@string/history"
-        app:showAsAction="collapseActionView|ifRoom" />
+        app:showAsAction="ifRoom" />
 
 </menu>

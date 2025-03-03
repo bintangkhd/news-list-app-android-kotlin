@@ -7,24 +7,53 @@
     android:layout_height="match_parent"
     tools:context=".ui.history.HistoryActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_history"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="@string/history"
+        app:navigationIcon="@drawable/ic_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_history_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_history"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:shimmer_auto_start="true"
         app:shimmer_duration="1000">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_history_news"
+            android:id="@+id/rv_history_news_placeholder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:listitem="@layout/item_history_news"/>
+            tools:listitem="@layout/item_history_news_placeholder"/>
 
     </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_history_news"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_history"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/item_history_news"/>
 
     <include
         android:id="@+id/layout_no_data"
@@ -34,7 +63,7 @@
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_history"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

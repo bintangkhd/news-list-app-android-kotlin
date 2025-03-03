@@ -1,11 +1,17 @@
 package com.bintangkhd.newslist.di
 
+import android.content.Context
+import androidx.room.Room
 import com.bintangkhd.newslist.BuildConfig
+import com.bintangkhd.newslist.data.service.local.NewsHistoryDao
+import com.bintangkhd.newslist.data.service.local.NewsHistoryDatabase
 import com.bintangkhd.newslist.data.service.remote.ApiService
+import com.bintangkhd.newslist.repository.NewsHistoryRepository
 import com.bintangkhd.newslist.repository.NewsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -46,4 +52,26 @@ object AppModule {
     fun provideNewsRepository(apiService: ApiService): NewsRepository {
         return NewsRepository(apiService)
     }
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): NewsHistoryDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            NewsHistoryDatabase::class.java,
+            "news_history_db"
+        ).build()
+    }
+
+    @Provides
+    fun provideNewsHistoryDao(database: NewsHistoryDatabase): NewsHistoryDao {
+        return database.newsHistoryDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsHistoryRepository(newsHistoryDao: NewsHistoryDao): NewsHistoryRepository {
+        return NewsHistoryRepository(newsHistoryDao)
+    }
+
 }
