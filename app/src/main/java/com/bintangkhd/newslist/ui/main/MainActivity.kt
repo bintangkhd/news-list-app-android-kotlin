@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = GridLayoutManager(this, 2)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (position % 5 == 0) 2 else 1
+                return if (position % 3 == 0) 2 else 1
             }
         }
 
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                 Log.e("MainActivity", "Gagal memuat berita: ${it.error.message}")
                 Toast.makeText(
                     this@MainActivity,
-                    "Failed to connect, please make sure you are connected",
+                    "Failed to connect, please make sure you are connected and try again.",
                     Toast.LENGTH_SHORT
                 ).show()
             }

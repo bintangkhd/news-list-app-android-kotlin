@@ -42,7 +42,7 @@ class MainViewModel @Inject constructor(
     }
 
     companion object {
-        private const val DEFAULT_QUERY = "global"
+        private const val DEFAULT_QUERY = "United Nation"
     }
 }
 
